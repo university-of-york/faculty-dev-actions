@@ -3,7 +3,7 @@ description: Run bundle update and create a PR for any updates
 author: Faculty Development Team
 
 inputs:
-  checkout_key:
+  checkout-key:
     description: Key to use when checking out the repository
     required: true
 
@@ -12,7 +12,7 @@ runs:
   steps:
     - uses: actions/checkout@v2
       with:
-        ssh-key: ${{ inputs.checkout_key }}
+        ssh-key: ${{ inputs.checkout-key }}
     - run: bundle update
       shell: bash
     - name: Create Pull Request
