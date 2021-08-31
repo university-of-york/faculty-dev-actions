@@ -1,0 +1,13 @@
+name: Bundler Audit
+description: Audit packages included by bundler for potential issues
+author: Faculty Development Team
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    # See https://jira.york.ac.uk/browse/FD-594 for CVE-2015-9284
+    - run: bundle exec bundler-audit check --update --ignore CVE-2015-9284
