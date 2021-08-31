@@ -11,3 +11,4 @@ runs:
         bundler-cache: true
     # See https://jira.york.ac.uk/browse/FD-594 for CVE-2015-9284
     - run: bundle exec bundler-audit check --update --ignore CVE-2015-9284
+      shell: bash
