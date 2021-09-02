@@ -6,6 +6,10 @@ inputs:
   checkout-key:
     description: Key to use when checking out the repository
     required: true
+  working-directory:
+    description: Working directory for bundle update
+    required: false
+    default: ./
 
 runs:
   using: composite
@@ -16,10 +20,13 @@ runs:
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
+        working-directory: ${{ inputs.working-directory }}
     - run: bundle config --local deployment false
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
     - run: bundle update
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
