@@ -2,11 +2,6 @@ name: rspec in Lambda
 description: Run rspec within a lambda container
 author: Faculty Development Team
 
-inputs:
-  db-user:
-    description: Database user to use to connect to a postgres instance
-    required: false
-
 runs:
   using: composite
   steps:
@@ -17,6 +12,3 @@ runs:
       uses: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-postgres:2.7
       with:
         args: bundle exec rspec
-      env:
-        DB_HOST: postgres
-        DB_USER: ${{ inputs.db-user }}

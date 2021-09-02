@@ -69,10 +69,6 @@ jobs:
 
 Run `rspec` tests in the AWS lambda environment.
 
-### Inputs
-
-* `db-user`: the database user to connect with, if required 
-
 ### Example
 
 This is an example with a postgres database available for tests.
@@ -93,8 +89,9 @@ jobs:
           --health-retries 5
     steps:
       - uses: university-of-york/faculty-dev-actions/rspec-lambda@v1
-        with:
-          db-user: sinatra_base_app
+        env:
+          DB_HOST: postgres
+          DB_USER: sinatra_base_app
 ```
 
 ## rubocop
