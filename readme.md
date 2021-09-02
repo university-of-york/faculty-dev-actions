@@ -2,9 +2,11 @@
 
 Useful actions shared between our repositories.
 
-## bundle-update
+## bundle-update-container
 
-Run `bundle update` against a repository and create a pull request with any changes.
+Run `bundle update` _in a container_ against a repository and create a pull request with any changes.
+
+This action assumes the container already has `bundler` installed.
 
 ### Inputs
 
@@ -33,6 +35,10 @@ jobs:
         with:
           checkout-key: ${{ secrets.BUNDLE_UPDATE_SSH_PRIVATE_KEY }}
 ```
+
+## bundle-update-runner
+
+As above, but expects to be run on a runner, not in a container, so will call `setup-ruby`.
 
 ## bundler-audit
 

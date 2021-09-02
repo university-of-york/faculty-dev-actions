@@ -1,5 +1,5 @@
-name: Bundle Update
-description: Run bundle update and create a PR for any updates
+name: Bundle Update (in a container)
+description: Run bundle update (in a container that already has bundler installed) and create a PR for any updates
 author: Faculty Development Team
 
 inputs:
