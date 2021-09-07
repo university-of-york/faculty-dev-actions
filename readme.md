@@ -94,6 +94,14 @@ jobs:
           DB_USER: sinatra_base_app
 ```
 
+## rspec-lambda-vue
+
+Run `rspec` tests in the AWS lambda environment, and download built Vue components from an artifact. 
+
+### Inputs
+
+* `artifact-name`: the name of the artifact to download. Defaults to `vue-components`.
+
 ## rubocop
 
 Run `rubocop` against a repository.
