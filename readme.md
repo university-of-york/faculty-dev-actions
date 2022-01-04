@@ -84,6 +84,17 @@ As `bundle-update-container`, but expects to be run on a runner, not in a contai
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
 * `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
 
+## bundle-update-dev-runner
+
+As `bundle-update-dev-container`, but expects to be run on a runner, not in a container, so will call `setup-ruby`.
+
+### Inputs
+
+* `checkout-key`: the SSH key to use to check out the repository.
+  Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
+* `github-token`: the token used in the workflow to allow the PR to be updated and auto-merged
+* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+
 ## bundler-audit
 
 Run `bundle exec bundler-audit check --update` against a repository.
