@@ -101,7 +101,7 @@ Deploys the named gem to gemfury
 
 * `gem-name`: the name of the gem to build
 * `gemfury-push-token`: the token used to authenticate with gemfury
-* `prerelease` _(optional)_: set to anything other than "false" to only upload prerelease versions
+* `prerelease-only` _(optional)_: set to anything other than "false" to only upload prerelease versions
 * `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example

@@ -9,7 +9,7 @@ inputs:
   gemfury-push-token:
     description: Gemfury push token
     required: true
-  prerelease:
+  prerelease-only:
     description: Prerelease only?
     required: false
     default: "false"
@@ -43,5 +43,5 @@ runs:
     - name: Push to gemfury
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-      if: ${{ inputs.prerelease == 'false' || steps.pre-release.outputs.pre-release == 'true' }}
+      if: ${{ inputs.prerelease-only == 'false' || steps.pre-release.outputs.pre-release == 'true' }}
       run: curl --fail -F package=@built.gem https://${{ inputs.gemfury-push-token }}@push.fury.io/universityofyork/
