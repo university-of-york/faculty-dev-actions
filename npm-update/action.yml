@@ -11,7 +11,7 @@ inputs:
     required: false
     default: '14'
   working-directory:
-    description: Working directory for bundle update
+    description: Working directory for npm update
     required: false
     default: ./
 

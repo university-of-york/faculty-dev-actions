@@ -1,5 +1,5 @@
 name: rspec in Lambda
-description: Run rspec within a lambda container
+description: Run rspec directly on a runner
 author: Faculty Development Team
 
 inputs:
