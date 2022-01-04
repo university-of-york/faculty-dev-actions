@@ -13,11 +13,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: |
-        yum install -y yum-utils
-        yum-config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-        yum install -y gh
-      shell: bash
     - uses: actions/checkout@v2
       with:
         ssh-key: ${{ inputs.checkout-key }}
