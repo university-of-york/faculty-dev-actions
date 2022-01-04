@@ -114,6 +114,32 @@ jobs:
       - uses: university-of-york/faculty-dev-actions/bundler-audit@v1
 ```
 
+## gemfury-deploy
+
+Deploys the named gem to gemfury
+
+### Inputs
+
+* `gem-name`: the name of the gem to build
+* `gemfury-push-token`: the token used to authenticate with gemfury
+* `prerelease`: (optional) set to anything other than "false" to only upload prerelease versions
+* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+
+### Example
+
+```yaml
+jobs:
+  gemfury-deploy:
+    name: Gemfury Deployment
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: university-of-york/faculty-dev-actions/gemfury-deployment@v1
+        with:
+          gem-name: uoy-faculty-new_gem
+          gemfury-push-token: ${{ secrets.GEMFURY_PUSH_TOKEN }}
+```
+
 ## npm-update
 
 Runs `npm update` on a runner against a repository and create a pull request with any changes.

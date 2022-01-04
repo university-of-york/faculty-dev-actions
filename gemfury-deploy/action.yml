@@ -1,0 +1,47 @@
+name: Gemfury Deploy
+description: Deploy to gemfury
+author: Faculty Development Team
+
+inputs:
+  gem-name:
+    description: Name of the gem to build
+    required: true
+  gemfury-push-token:
+    description: Gemfury push token
+    required: true
+  prerelease:
+    description: Prerelease only?
+    required: false
+    default: "false"
+  working-directory:
+    description: Working directory for Gemfile
+    required: false
+    default: ./
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        working-directory: ${{ inputs.working-directory }}
+    - name: Build the gem
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        gem build ${{ inputs.gem-name }}
+        mv *.gem built.gem
+    - name: Check if this is a prerelease
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        export VERSION=`gem specification built.gem version | grep version: | sed 's/version: //'`
+        IS_PRERELEASE=`ruby -e 'puts ENV["VERSION"].match?(/[[:alpha:]]/)'`
+        echo "::set-output name=pre-release::$IS_PRERELEASE"
+      id: pre-release
+    - name: Push to gemfury
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      if: ${{ inputs.prerelease == 'false' || steps.pre-release.outputs.pre-release == 'true' }}
+      run: curl --fail -F package=@built.gem https://${{ inputs.gemfury-push-token }}@push.fury.io/universityofyork/
