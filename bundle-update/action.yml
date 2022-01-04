@@ -1,0 +1,34 @@
+name: Bundle Update
+description: Run bundle update and create a PR for any updates
+author: Faculty Development Team
+
+inputs:
+  checkout-key:
+    description: Key to use when checking out the repository
+    required: true
+  container:
+    description: Run in a container (don't run setup-ruby)
+    required: false
+    default: "false"
+  working-directory:
+    description: Working directory for bundle update
+    required: false
+    default: ./
+
+runs:
+  using: composite
+  steps:
+    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@v1
+      with:
+        checkout-key: ${{ inputs.checkout-key }}
+        container: ${{ inputs.container }}
+        working-directory: ${{ inputs.working-directory }}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        body: Changes after running `bundle update`
+        branch: bundle-update
+        commit-message: bundle update
+        delete-branch: true
+        labels: dependencies, ruby
+        title: Bundle Update

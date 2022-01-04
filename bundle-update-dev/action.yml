@@ -1,0 +1,46 @@
+name: Bundle Update [development, test]
+description: Run `bundle update --group development test`; create a PR for any updates; and set the PR to auto-merge
+author: Faculty Development Team
+
+inputs:
+  checkout-key:
+    description: Key to use when checking out the repository
+    required: true
+  container:
+    description: Run in a container (don't run setup-ruby)
+    required: false
+    default: "false"
+  github-token:
+    description: GITHUB_TOKEN for setting the PR to auto merge
+    required: true
+  working-directory:
+    description: Working directory for bundle update
+    required: false
+    default: ./
+
+runs:
+  using: composite
+  steps:
+    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@v1
+      with:
+        arguments: --group development test
+        checkout-key: ${{ inputs.checkout-key }}
+        container: ${{ inputs.container }}
+        working-directory: ${{ inputs.working-directory }}
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        body: Changes after running `bundle update --group development test`
+        branch: bundle-update-dev
+        commit-message: bundle update --group development test
+        delete-branch: true
+        labels: dependencies, ruby
+        title: Bundle Update [development, test]
+    - name: Enable auto-merge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      run: gh pr merge --auto --merge "$PR_URL"
+      shell: bash
+      env:
+        PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}

@@ -2,12 +2,23 @@ name: rspec in Lambda
 description: Run rspec within a lambda container
 author: Faculty Development Team
 
+inputs:
+  artifact-name:
+    description: Name for the artifact to download (if required)
+    required: false
+    default: "false"
+
 runs:
   using: composite
   steps:
     - uses: actions/checkout@v2
     - run: bundle install --deployment --without development
       shell: bash
+    - uses: actions/download-artifact@v2
+      if: ${{ inputs.container != 'false' }}
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: public/js
     - name: RSpec tests
       uses: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-postgres:2.7
       with:

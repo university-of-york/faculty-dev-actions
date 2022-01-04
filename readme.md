@@ -1,21 +1,19 @@
-# Faculty Development Team Github Actions
+# Faculty Development Team GitHub Actions
 
 Useful actions shared between our repositories.
 
-## bundle-update-container
+## bundle-update
 
-Run `bundle update` _in a container_ against a repository and create a pull request with any changes.
-
-This action assumes the container already has `bundler` installed.
+Run `bundle update` against a repository and create a pull request with any changes.
 
 ### Inputs
 
 * `checkout-key`: the SSH key to use to check out the repository.
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
+* `container` _(optional)_: Run in a container with ruby already initialised. 
+* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
-
-This is for an AWS sinatra app. Other uses may not need the container (or to run on self-hosted runners). 
 
 ```yaml
 name: Bundle Update
@@ -34,19 +32,20 @@ jobs:
       - uses: university-of-york/faculty-dev-actions/bundle-update@v1
         with:
           checkout-key: ${{ secrets.BUNDLE_UPDATE_SSH_PRIVATE_KEY }}
+          container: "true"
 ```
 
-## bundle-update-dev-container
+## bundle-update-dev
 
-Run `bundle update --group test development` _in a container_ against a repository and _auto-merge_ the pull request with any changes.
-
-This action assumes the container already has `bundler` installed.
+Run `bundle update --group development test` against a repository and _auto-merge_ the pull request with any changes.
 
 ### Inputs
 
 * `checkout-key`: the SSH key to use to check out the repository.
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
-* `github-token`: the token used in the workflow to allow the PR to be updated and auto-merged
+* `container` _(optional)_: Run in a container with ruby already initialised.
+* `github-token`: the token used in the workflow to allow the PR to be updated and auto-merged.
+* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
 
@@ -64,36 +63,16 @@ permissions:
 
 jobs:
   bundle-update:
-    name: Run bundle update --group test development and auto-merge
+    name: Run `bundle update --group development test` and auto-merge
     runs-on: [ self-hosted, linux, x64 ]
     container: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-dev:2.7
     steps:
       - uses: university-of-york/faculty-dev-actions/bundle-update-dev-container@v1
         with:
           checkout-key: ${{ secrets.BUNDLE_UPDATE_SSH_PRIVATE_KEY }}
+          container: "true"
           github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-## bundle-update-runner
-
-As `bundle-update-container`, but expects to be run on a runner, not in a container, so will call `setup-ruby`.
-
-### Inputs
-
-* `checkout-key`: the SSH key to use to check out the repository.
-  Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
-
-## bundle-update-dev-runner
-
-As `bundle-update-dev-container`, but expects to be run on a runner, not in a container, so will call `setup-ruby`.
-
-### Inputs
-
-* `checkout-key`: the SSH key to use to check out the repository.
-  Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
-* `github-token`: the token used in the workflow to allow the PR to be updated and auto-merged
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ## bundler-audit
 
@@ -122,7 +101,7 @@ Deploys the named gem to gemfury
 
 * `gem-name`: the name of the gem to build
 * `gemfury-push-token`: the token used to authenticate with gemfury
-* `prerelease`: (optional) set to anything other than "false" to only upload prerelease versions
+* `prerelease` _(optional)_: set to anything other than "false" to only upload prerelease versions
 * `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
@@ -155,6 +134,10 @@ Runs `npm update` on a runner against a repository and create a pull request wit
 
 Run `rspec` tests in the AWS lambda environment.
 
+### Inputs
+
+* `artifact-name` _(optional)_: the name of the vue artifact to download.
+
 ### Example
 
 This is an example with a postgres database available for tests.
@@ -179,14 +162,6 @@ jobs:
           DB_HOST: postgres
           DB_USER: sinatra_base_app
 ```
-
-## rspec-lambda-vue
-
-Run `rspec` tests in the AWS lambda environment, and download built Vue components from an artifact. 
-
-### Inputs
-
-* `artifact-name`: the name of the artifact to download. Defaults to `vue-components`.
 
 ## rspec-runner
 
