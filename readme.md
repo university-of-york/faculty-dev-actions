@@ -36,9 +36,47 @@ jobs:
           checkout-key: ${{ secrets.BUNDLE_UPDATE_SSH_PRIVATE_KEY }}
 ```
 
+## bundle-update-dev-container
+
+Run `bundle update --group test development` _in a container_ against a repository and _auto-merge_ the pull request with any changes.
+
+This action assumes the container already has `bundler` installed.
+
+### Inputs
+
+* `checkout-key`: the SSH key to use to check out the repository.
+  Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
+* `github-token`: the token used in the workflow to allow the PR to be updated and auto-merged
+
+### Example
+
+```yaml
+name: Bundle Update [development, test]
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  bundle-update:
+    name: Run bundle update --group test development and auto-merge
+    runs-on: [ self-hosted, linux, x64 ]
+    container: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-dev:2.7
+    steps:
+      - uses: university-of-york/faculty-dev-actions/bundle-update-dev-container@v1
+        with:
+          checkout-key: ${{ secrets.BUNDLE_UPDATE_SSH_PRIVATE_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
 ## bundle-update-runner
 
-As above, but expects to be run on a runner, not in a container, so will call `setup-ruby`.
+As `bundle-update-container`, but expects to be run on a runner, not in a container, so will call `setup-ruby`.
 
 ### Inputs
 

@@ -1,0 +1,42 @@
+name: Bundle Update [development, test] (in a container)
+description: Run bundle update --group test development (in a container that already has bundler installed); create a PR for any updates; and set the PR to auto-merge
+author: Faculty Development Team
+
+inputs:
+  checkout-key:
+    description: Key to use when checking out the repository
+    required: true
+  github-token:
+    description: GITHUB_TOKEN for setting the PR to auto merge
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: |
+        yum install -y yum-utils
+        yum-config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+        yum install -y gh
+      shell: bash
+    - uses: actions/checkout@v2
+      with:
+        ssh-key: ${{ inputs.checkout-key }}
+    - run: bundle update --group test development
+      shell: bash
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        body: Changes after running `bundle update --group test development`
+        branch: bundle-update-dev
+        commit-message: bundle update --group test development
+        delete-branch: true
+        labels: dependencies, ruby
+        title: Bundle Update [development, test]
+    - name: Enable auto-merge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      run: gh pr merge --auto --merge "$PR_URL"
+      shell: bash
+      env:
+        PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
