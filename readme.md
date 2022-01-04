@@ -189,3 +189,23 @@ jobs:
     steps:
       - uses: university-of-york/faculty-dev-actions/rubocop@v1
 ```
+
+## vue-build
+
+Build Vue components and upload them as an artifact named `vue-components`
+
+### Inputs
+
+* `node-version` _(optional)_: the version of node to use. Defaults to 14.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
+
+### Example
+
+```yaml
+jobs:
+  vue-build:
+    name: Build Vue components
+    runs-on: ubuntu-latest
+    steps:
+      - uses: university-of-york/faculty-dev-actions/vue-build@v1
+```
