@@ -1,4 +1,4 @@
-name: rspec in Lambda
+name: rspec on Runner
 description: Run rspec directly on a runner
 author: Faculty Development Team
 
@@ -16,7 +16,6 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
-    - name: RSpec tests
-      uses: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-postgres:2.7
-      with:
-        args: bundle exec rspec
+    - run: bundle exec rspec
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
