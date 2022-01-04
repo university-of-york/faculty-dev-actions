@@ -11,7 +11,7 @@ Run `bundle update` against a repository and create a pull request with any chan
 * `checkout-key`: the SSH key to use to check out the repository.
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
 * `container` _(optional)_: Run in a container with ruby already initialised. 
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
 
@@ -45,7 +45,7 @@ Run `bundle update --group development test` against a repository and _auto-merg
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
 * `container` _(optional)_: Run in a container with ruby already initialised.
 * `github-token`: the token used in the workflow to allow the PR to be updated and auto-merged.
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
 
@@ -80,7 +80,7 @@ Run `bundle exec bundler-audit check --update` against a repository.
 
 ### Inputs
 
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
 
@@ -102,7 +102,7 @@ Deploys the named gem to gemfury
 * `gem-name`: the name of the gem to build
 * `gemfury-push-token`: the token used to authenticate with gemfury
 * `prerelease-only` _(optional)_: set to anything other than "false" to only upload prerelease versions
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
 
@@ -127,8 +127,8 @@ Runs `npm update` on a runner against a repository and create a pull request wit
 
 * `checkout-key`: the SSH key to use to check out the repository.
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
-* `node-version`: the version of node to use. Defaults to 14.
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `node-version` _(optional)_: the version of node to use. Defaults to 14.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ## rspec-lambda
 
@@ -169,7 +169,7 @@ Run `rspec` tests on a runner.
 
 ### Inputs
 
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ## rubocop
 
@@ -177,7 +177,7 @@ Run `rubocop` against a repository.
 
 ### Inputs
 
-* `working-directory`: the working directory where Gemfile can be found. Defaults to the repository root.
+* `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ### Example
 
