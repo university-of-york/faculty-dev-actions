@@ -1,0 +1,71 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: bundle-update
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: bundle-update-dev
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: bundle-update-shared
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: bundle-audit
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: gemfury-deploy
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: npm-update
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: rspec-lambda
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: rspec-runner
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: rubocop
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: vue-build
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
