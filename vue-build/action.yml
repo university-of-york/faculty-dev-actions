@@ -27,7 +27,7 @@ runs:
     - run: npx webpack --config webpack.prod.js
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: vue-components
         path: ${{ inputs.working-directory }}public/js/**
