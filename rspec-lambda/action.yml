@@ -14,7 +14,7 @@ runs:
     - uses: actions/checkout@v3
     - run: bundle install --deployment --without development
       shell: bash
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       if: ${{ inputs.artifact-name != 'false' }}
       with:
         name: ${{ inputs.artifact-name }}
