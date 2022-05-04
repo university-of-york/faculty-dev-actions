@@ -1,0 +1,38 @@
+name: Web Library Update
+description: Check if the web library needs to be updated
+author: Faculty Development Team
+
+inputs:
+  checkout-key:
+    description: Key to use when checking out the repository
+    required: true
+  working-directory:
+    description: Working directory for web library config file
+    required: false
+    default: ./
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        ssh-key: ${{ inputs.checkout-key }}
+    - run: |
+        LOCAL=`yq '.web_library.version' config.yaml`
+        SOURCE=`yq '.web_library.root' config.yaml`
+        REMOTE=`wget -nv -O - $SOURCE/latest 2> /dev/null`
+        if [[ "$LOCAL" != "$REMOTE" ]]; then
+          export REMOTE
+          yq -i '.web_library.version = strenv(REMOTE)' config.yaml
+        fi
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        body: Update web library version
+        branch: web-library-version
+        commit-message: Update web library version
+        delete-branch: true
+        labels: dependencies
+        title: Update Web Library
