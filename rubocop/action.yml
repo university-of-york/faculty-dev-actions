@@ -19,7 +19,7 @@ runs:
     - run: bundle exec rubocop --format markdown -o rubocop.md --format github
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-    - run: echo rubocop.md >> $GITHUB_STEP_SUMMARY
+    - run: cat rubocop.md >> $GITHUB_STEP_SUMMARY
       shell: bash
       if: always()
       working-directory: ${{ inputs.working-directory }}
