@@ -16,6 +16,9 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
-    - run: bundle exec rubocop
+    - run: bundle exec rubocop --format markdown -o rubocop.md --format github
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: echo rubocop.md >> $GITHUB_STEP_SUMMARY
       shell: bash
       working-directory: ${{ inputs.working-directory }}
