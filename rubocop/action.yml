@@ -21,4 +21,5 @@ runs:
       working-directory: ${{ inputs.working-directory }}
     - run: echo rubocop.md >> $GITHUB_STEP_SUMMARY
       shell: bash
+      if: always()
       working-directory: ${{ inputs.working-directory }}
