@@ -23,6 +23,8 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       id: version
+    - run: echo ${{ steps.version.outputs.markdown }}
+      shell: bash
     - run: bundle exec rubocop --format github
       shell: bash
       working-directory: ${{ inputs.working-directory }}
