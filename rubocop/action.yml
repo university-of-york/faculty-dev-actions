@@ -31,8 +31,8 @@ runs:
     - run: bundle exec rubocop --format markdown -o rubocop.md
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-      if: ${{ steps.version.outputs.markdown }}
+      if: ${{ steps.version.outputs.markdown == 'true' }}
     - run: cat rubocop.md >> $GITHUB_STEP_SUMMARY
       shell: bash
-      if: ${{ always() && steps.version.outputs.markdown }}
+      if: ${{ always() && (steps.version.outputs.markdown == 'true') }}
       working-directory: ${{ inputs.working-directory }}
