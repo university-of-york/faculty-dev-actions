@@ -26,11 +26,7 @@ runs:
     - run: bundle exec rubocop --format github
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-    - run: bundle exec rubocop --format markdown -o rubocop.md
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      if: ${{ steps.version.outputs.markdown == 'true' }}
-    - run: cat rubocop.md >> $GITHUB_STEP_SUMMARY
+    - run: bundle exec rubocop --format markdown >> $GITHUB_STEP_SUMMARY
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       if: ${{ always() && (steps.version.outputs.markdown == 'true') }}
