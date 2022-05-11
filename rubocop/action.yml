@@ -16,10 +16,21 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
-    - run: bundle exec rubocop --format markdown -o rubocop.md --format github
+    - run: |
+        RUBOCOP_VERSION=`bundle exec rubocop -v`
+        MARKDOWN=`ruby -e "p Gem::Version.new('$RUBOCOP_VERSION') >= Gem::Version.new('1.29')"`
+        echo "::set-output name=markdown::$MARKDOWN"
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+      id: version
+    - run: bundle exec rubocop --format github
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: bundle exec rubocop --format markdown -o rubocop.md
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      if: steps.version.outputs.markdown
     - run: cat rubocop.md >> $GITHUB_STEP_SUMMARY
       shell: bash
-      if: always()
+      if: always() && steps.version.outputs.markdown
       working-directory: ${{ inputs.working-directory }}
