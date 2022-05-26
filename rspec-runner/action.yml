@@ -15,13 +15,13 @@ runs:
     - uses: ruby/setup-ruby@v1
       with:
         working-directory: ${{ inputs.working-directory }}
-    - run: bundle add rspec-github-actions-summary
+    - run: bundle add rspec-github-actions-summary rspec-github
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - run: bundle install
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-    - run: bundle exec rspec --require rspec_github_actions_summary --format RspecGithubActionsSummary
+    - run: bundle exec rspec --format RspecGithubActionsSummary --format RSpec::Github::Formatter
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - run: bundle exec rspec-gh-summary >> $GITHUB_STEP_SUMMARY
