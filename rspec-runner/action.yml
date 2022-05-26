@@ -16,6 +16,8 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
+      env:
+        BUNDLE_DEPLOYMENT: 'false'
     - run: bundle add rspec-github-actions-summary
       shell: bash
       working-directory: ${{ inputs.working-directory }}
