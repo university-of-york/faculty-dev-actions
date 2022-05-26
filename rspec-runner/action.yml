@@ -14,11 +14,11 @@ runs:
     - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1
       with:
-        bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
-      env:
-        BUNDLE_DEPLOYMENT: 'false'
     - run: bundle add rspec-github-actions-summary
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: bundle install
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - run: bundle exec rspec --require rspec_github_actions_summary --format RspecGithubActionsSummary
