@@ -12,6 +12,8 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v3
+    - run: bundle add rspec-github-actions-summary rspec-github
+      shell: bash
     - run: bundle install --deployment --without development
       shell: bash
     - uses: actions/download-artifact@v3
@@ -22,4 +24,7 @@ runs:
     - name: RSpec tests
       uses: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-postgres:2.7
       with:
-        args: bundle exec rspec
+        args: bundle exec rspec --format RspecGithubActionsSummary --format RSpec::Github::Formatter
+    - run: bundle exec rspec-gh-summary >> $GITHUB_STEP_SUMMARY
+      if: always()
+      shell: bash

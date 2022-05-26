@@ -18,7 +18,7 @@ runs:
     - run: bundle add rspec-github-actions-summary rspec-github
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-    - run: bundle install
+    - run: bundle install --deployment --without development
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - run: bundle exec rspec --format RspecGithubActionsSummary --format RSpec::Github::Formatter
