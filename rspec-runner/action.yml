@@ -16,6 +16,13 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
-    - run: bundle exec rspec
+    - run: bundle add rspec-github-actions-summary
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: bundle exec rspec --require rspec_github_actions_summary --format RspecGithubActionsSummary
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: bundle exec rspec-gh-summary >> $GITHUB_STEP_SUMMARY
+      if: always()
       shell: bash
       working-directory: ${{ inputs.working-directory }}
