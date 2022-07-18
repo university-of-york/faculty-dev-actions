@@ -28,6 +28,9 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
+    # Fix for https://github.com/peter-evans/create-pull-request/issues/1170
+    - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      shell: bash
     - run: bundle config --local deployment false
       if: ${{ inputs.container == 'false' }}
       shell: bash
