@@ -1,5 +1,5 @@
-name: rspec on Runner
-description: Run rspec directly on a runner
+name: rspec on Runner with Github formatter
+description: Run rspec directly on a runner and use the github formatter
 author: Faculty Development Team
 
 inputs:
@@ -16,6 +16,10 @@ runs:
       with:
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
-    - run: bundle exec rspec
+    - run: bundle exec rspec --format RspecGithubActionsSummary --format RSpec::Github::Formatter
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: bundle exec rspec-gh-summary >> $GITHUB_STEP_SUMMARY
+      if: always()
       shell: bash
       working-directory: ${{ inputs.working-directory }}

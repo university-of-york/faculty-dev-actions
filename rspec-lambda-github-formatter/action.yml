@@ -1,5 +1,5 @@
-name: rspec in Lambda
-description: Run rspec within a lambda container
+name: rspec in Lambda with Github formatter
+description: Run rspec within a lambda container and use the github formatter
 author: Faculty Development Team
 
 inputs:
@@ -20,5 +20,8 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: public/js
     - name: RSpec tests
-      run: bundle exec rspec
+      run: bundle exec rspec --format RspecGithubActionsSummary --format RSpec::Github::Formatter
+      shell: bash
+    - run: bundle exec rspec-gh-summary >> $GITHUB_STEP_SUMMARY
+      if: always()
       shell: bash
