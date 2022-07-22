@@ -163,6 +163,11 @@ jobs:
           DB_USER: sinatra_base_app
 ```
 
+## rspec-lambda-github-formatter
+
+As above, but expects the `rspec-github-actions-summary` and `rspec-github` gems to be installed to generate output for 
+github's reports.
+
 ## rspec-runner
 
 Run `rspec` tests on a runner.
@@ -170,6 +175,11 @@ Run `rspec` tests on a runner.
 ### Inputs
 
 * `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
+
+## rspec-runner-github-formatter
+
+As above, but expects the `rspec-github-actions-summary` and `rspec-github` gems to be installed to generate output for
+github's reports.
 
 ## rubocop
 
