@@ -18,11 +18,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@v1
+    - uses: university-of-york/faculty-dev-actions/bundle-update-prep@v1
       with:
         checkout-key: ${{ inputs.checkout-key }}
         container: ${{ inputs.container }}
         working-directory: ${{ inputs.working-directory }}
+    - run: bundle update --all
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       with:
