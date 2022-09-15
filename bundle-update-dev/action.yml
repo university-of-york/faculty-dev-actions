@@ -25,7 +25,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@v1
+    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@dev-update
       with:
         checkout-key: ${{ inputs.checkout-key }}
         container: ${{ inputs.container }}
