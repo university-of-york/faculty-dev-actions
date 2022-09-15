@@ -1,5 +1,5 @@
-name: Bundle Update (shared)
-description: Run tasks to prepare for running `bundle update`
+name: Bundle Update Preparation
+description: Preparations for running `bundle update`
 author: Faculty Development Team
 
 inputs:
