@@ -1,5 +1,5 @@
 name: Bundle Update [development, test]
-description: Run `bundle update --group development test`; create a PR for any updates; and set the PR to auto-merge
+description: Run `bundle update --conservative` for non-production gems; create a PR for any updates; and set the PR to auto-merge
 author: Faculty Development Team
 
 inputs:
@@ -25,7 +25,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@dev-update
+    - uses: university-of-york/faculty-dev-actions/bundle-update-shared@v1
       with:
         checkout-key: ${{ inputs.checkout-key }}
         container: ${{ inputs.container }}
@@ -51,16 +51,16 @@ runs:
       id: cpr
       uses: peter-evans/create-pull-request@v4
       with:
-        body: Changes after running `bundle update --group development test --conservative`
+        body: Changes after running `bundle update --conservative` for non-production gems
         branch: bundle-update-dev
-        commit-message: bundle update --group development test --conservative
+        commit-message: bundle update --conservative for non-production gems
         delete-branch: true
         labels: dependencies, ruby
-        title: Bundle Update [development, test]
-#    - name: Enable auto-merge
-#      if: steps.cpr.outputs.pull-request-operation == 'created'
-#      run: gh pr merge "$PR_URL" --auto --delete-branch --squash
-#      shell: bash
-#      env:
-#        PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
-#        GITHUB_TOKEN: ${{ inputs.github-token }}
+        title: Bundle Update [non-production gems]
+    - name: Enable auto-merge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      run: gh pr merge "$PR_URL" --auto --delete-branch --squash
+      shell: bash
+      env:
+        PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
