@@ -23,10 +23,21 @@ runs:
   steps:
     - uses: university-of-york/faculty-dev-actions/bundle-update-shared@v1
       with:
-        arguments: --group development test --conservative
         checkout-key: ${{ inputs.checkout-key }}
         container: ${{ inputs.container }}
         working-directory: ${{ inputs.working-directory }}
+    - run: |
+        bundle list --name-only > .gems-all
+        bundle list --name-only --without-group test development > .gems-prod
+        cat .gems-all .gems-prod | sort | uniq -u > .gems-update
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: xargs -a .gems-update bundle update --conservative
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: rm .gems-*
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v4
