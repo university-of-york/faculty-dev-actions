@@ -13,10 +13,6 @@ inputs:
   github-token:
     description: GITHUB_TOKEN for setting the PR to auto merge
     required: true
-  groups:
-    description: Groups to ignore for production gems
-    required: false
-    default: "development test"
   working-directory:
     description: Working directory for bundle update
     required: false
@@ -30,23 +26,36 @@ runs:
         checkout-key: ${{ inputs.checkout-key }}
         container: ${{ inputs.container }}
         working-directory: ${{ inputs.working-directory }}
+
     - run: bundle install
       if: ${{ inputs.container != 'false' }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+
+    - run: bundle list --name-only > .gems-all
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+
+    - run: bundle list --name-only > .gems-prod
+      env:
+        BUNDLE_WITHOUT: %BUNDLE_WITHOUT%:development:test
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+
     - run: |
-        bundle list --name-only > .gems-all
-        bundle list --name-only --without-group ${{ inputs.groups }} > .gems-prod
-        cat .gems-all .gems-prod | sort | uniq -u > .gems-update
+        cat .gems-all .gems-prod | sed '/No gems in the Gemfile/d' | sort | uniq -u > .gems-update
         cat .gems-update
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+
     - run: xargs -a .gems-update bundle update --conservative
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+
     - run: rm .gems-*
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v4
@@ -57,6 +66,7 @@ runs:
         delete-branch: true
         labels: dependencies, ruby
         title: Bundle Update [non-production gems]
+
     - name: Enable auto-merge
       if: steps.cpr.outputs.pull-request-operation == 'created'
       run: gh pr merge "$PR_URL" --auto --delete-branch --squash
