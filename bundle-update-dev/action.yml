@@ -13,6 +13,10 @@ inputs:
   github-token:
     description: GITHUB_TOKEN for setting the PR to auto merge
     required: true
+  groups:
+    description: Groups to ignore for production gems
+    required: false
+    default: "development:test"
   working-directory:
     description: Working directory for bundle update
     required: false
@@ -37,7 +41,7 @@ runs:
       working-directory: ${{ inputs.working-directory }}
 
     - run: |
-        export BUNDLE_WITHOUT=$BUNDLE_WITHOUT:development:test
+        export BUNDLE_WITHOUT=$BUNDLE_WITHOUT:${{ inputs.groups }}
         bundle list --name-only > .gems-prod
       shell: bash
       working-directory: ${{ inputs.working-directory }}
