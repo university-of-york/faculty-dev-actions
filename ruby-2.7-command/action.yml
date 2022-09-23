@@ -1,0 +1,15 @@
+name: Ruby 2.7 container command
+description: Run a command within our ruby 2.7 container
+inputs:
+  command:
+    description: Command to run
+    required: true
+    default: bundle install
+
+runs:
+  using: docker
+  image: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-dev:2.7
+  args:
+    - bash
+    - -c
+    - ${{ inputs.command }}
