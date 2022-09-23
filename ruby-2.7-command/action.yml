@@ -4,7 +4,6 @@ inputs:
   command:
     description: Command to run
     required: true
-    default: bundle install
 
 runs:
   using: docker
