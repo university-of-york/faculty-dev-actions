@@ -1,0 +1,56 @@
+name: Cloudformation Deploy
+description: Deploy to cloudformation
+author: Faculty Development Team
+
+inputs:
+  aws-account-id:
+    description: AWS Account ID
+    required: true
+  aws-environment:
+    description: AWS Environment (dev, staging, prod)
+    required: true
+  parameter-overrides:
+    description: Parameter overrides for cloudformation
+    required: false
+  s3bucket:
+    description: S3 bucket for uploading code
+    required: true
+  stack-name:
+    description: Stack name for cloudformation
+    required: true
+    default: ${{ github.event.repository.name }}
+  tag-name:
+    description: Name of the app
+    required: true
+  template:
+    description: Template file name
+    required: true
+    default: cloudformation.yaml
+
+runs:
+  using: composite
+  steps:
+    - run: >
+        aws cloudformation package
+        --template-file ${{ inputs.template }}
+        --output-template-file serverless-output.yaml 
+        --s3-bucket ${{ inputs.s3bucket }}
+      shell: bash
+
+    - run: >
+        aws cloudformation deploy
+        --template-file serverless-output.yaml
+        --stack-name ${{ inputs.stack-name }}
+        --parameter-overrides ${{ inputs.parameter-overrides }}
+        --capabilities CAPABILITY_IAM
+        --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }}
+        --no-fail-on-empty-changeset
+        --tags 
+        name=${{ inputs.tag-name }} 
+        group=FACULTY-DEV
+        project=${{ github.repository }}
+        status=${{ inputs.aws-environment }} 
+        pushed_by=github
+        defined_in=cloudformation 
+        repo_name=${{ github.repository }}
+      shell: bash
