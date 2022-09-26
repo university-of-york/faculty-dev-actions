@@ -50,7 +50,21 @@ updates:
       time: "07:00"
 
   - package-ecosystem: github-actions
+    directory: rspec-lambda-github-formatter
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
     directory: rspec-runner
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: rspec-runner-github-formatter
     schedule:
       interval: weekly
       day: thursday

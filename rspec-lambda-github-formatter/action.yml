@@ -24,8 +24,5 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: ${{ inputs.artifact-path }}
     - name: RSpec tests
-      run: bundle exec rspec --format RspecGithubActionsSummary --format RSpec::Github::Formatter
-      shell: bash
-    - run: bundle exec rspec-gh-summary >> $GITHUB_STEP_SUMMARY
-      if: always()
+      run: bundle exec rspec --format RSpec::Github::Formatter
       shell: bash
