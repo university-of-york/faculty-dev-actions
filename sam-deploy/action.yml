@@ -46,11 +46,12 @@ runs:
         --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }}
         --no-fail-on-empty-changeset
         --tags 
-        name="${{ inputs.tag-name }}" 
-        group=FACULTY-DEV
-        project=${{ github.repository }}
-        status=${{ inputs.aws-environment }} 
-        pushed_by=github
-        defined_in=cloudformation 
-        repo_name=${{ github.repository }}
+        york/policy_version=2
+        york/name="${{ inputs.tag-name }}" 
+        york/group=FACULTY-DEV
+        york/project=${{ github.repository }}
+        york/status=${{ inputs.aws-environment }} 
+        york/pushed_by=github
+        york/defined_in=cloudformation 
+        york/repo_name=${{ github.repository }}
       shell: bash
