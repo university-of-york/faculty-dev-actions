@@ -64,7 +64,28 @@ updates:
       time: "07:00"
 
   - package-ecosystem: github-actions
+    directory: ruby-2.7-command
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: sam-deploy
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
     directory: vue-build
+    schedule:
+      interval: weekly
+      day: thursday
+      time: "07:00"
+
+  - package-ecosystem: github-actions
+    directory: web-library-update
     schedule:
       interval: weekly
       day: thursday
