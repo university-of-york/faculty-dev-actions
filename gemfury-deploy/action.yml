@@ -38,7 +38,7 @@ runs:
       run: |
         export VERSION=`gem specification built.gem version | grep version: | sed 's/version: //'`
         IS_PRERELEASE=`ruby -e 'puts ENV["VERSION"].match?(/[[:alpha:]]/)'`
-        echo "::set-output name=pre-release::$IS_PRERELEASE"
+        echo "pre-release=$IS_PRERELEASE" >> $GITHUB_OUTPUT
       id: pre-release
     - name: Push to gemfury
       shell: bash
