@@ -39,7 +39,8 @@ runs:
 
     - run: |
         ARGS=""
-        if [ -n "${{ inputs.parameter-overrides }}" ] then
+        if [ -n "${{ inputs.parameter-overrides }}" ] 
+        then
           ARGS="$ARGS --parameter-overrides ${{ inputs.parameter-overrides }} "
         fi
         
