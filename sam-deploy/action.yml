@@ -37,21 +37,26 @@ runs:
         --s3-bucket ${{ inputs.s3bucket }}
       shell: bash
 
-    - run: >
-        aws cloudformation deploy
-        --template-file serverless-output.yaml
-        --stack-name ${{ inputs.stack-name }}
-        --parameter-overrides ${{ inputs.parameter-overrides }}
-        --capabilities CAPABILITY_IAM
-        --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }}
-        --no-fail-on-empty-changeset
-        --tags 
-        york/policy_version=2
-        york/name="${{ inputs.tag-name }}" 
-        york/group=FACULTY-DEV
-        york/project=${{ github.repository }}
-        york/status=${{ inputs.aws-environment }} 
-        york/pushed_by=github
-        york/defined_in=cloudformation 
-        york/repo_name=${{ github.repository }}
+    - run: |
+        ARGS=""
+        if [ -z "${{ inputs.parameter-overrides }}" ] then
+          ARGS="$ARGS --parameter-overrides ${{ inputs.parameter-overrides }} "
+        fi
+        
+        aws cloudformation deploy \
+          --template-file serverless-output.yaml \
+          --stack-name ${{ inputs.stack-name }} \
+          --capabilities CAPABILITY_IAM \ 
+          --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }} \
+          --no-fail-on-empty-changeset \
+          $ARGS \
+          --tags \
+          york/policy_version=2 \
+          york/name="${{ inputs.tag-name }}" \ 
+          york/group=FACULTY-DEV \
+          york/project=${{ github.repository }} \
+          york/status=${{ inputs.aws-environment }} \ 
+          york/pushed_by=github \
+          york/defined_in=cloudformation \ 
+          york/repo_name=${{ github.repository }}
       shell: bash
