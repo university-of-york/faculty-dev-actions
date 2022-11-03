@@ -47,9 +47,8 @@ runs:
         aws cloudformation deploy \
           --template-file serverless-output.yaml \
           --stack-name ${{ inputs.stack-name }} \
-          --capabilities CAPABILITY_IAM \ 
           --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }} \
-          --no-fail-on-empty-changeset \
+          --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset \
           $ARGS \
           --tags \
           york/policy_version=2 \
