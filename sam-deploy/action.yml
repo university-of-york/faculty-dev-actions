@@ -44,14 +44,8 @@ runs:
           ARGS="$ARGS --parameter-overrides ${{ inputs.parameter-overrides }} "
         fi
         
-        array=(aws cloudformation deploy \
-        --template-file serverless-output.yaml \
-        --stack-name ${{ inputs.stack-name }} \
-        --capabilities CAPABILITY_IAM \
-        --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }} \
-        --no-fail-on-empty-changeset \
-        $ARGS \
-        --tags york/policy_version=2 york/name="${{ inputs.tag-name }}" \ 
+        TAGS_ARRAY=(york/policy_version=2 \ 
+        york/name="${{ inputs.tag-name }}" \ 
         york/group=FACULTY-DEV \
         york/project=${{ github.repository }} \
         york/status=${{ inputs.aws-environment }} \ 
@@ -59,6 +53,15 @@ runs:
         york/defined_in=cloudformation \ 
         york/repo_name=${{ github.repository }} \
         )
+        TAGS="--tags ${TAGS_ARRAY[@]}"
+        
+        array=(aws cloudformation deploy \
+        --template-file serverless-output.yaml \
+        --stack-name ${{ inputs.stack-name }} \
+        --capabilities CAPABILITY_IAM \
+        --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }} \
+        --no-fail-on-empty-changeset \
+        $ARGS $TAGS)
         
         eval $(echo ${array[@]})
       shell: bash
