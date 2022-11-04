@@ -45,7 +45,7 @@ runs:
         fi
         
         TAGS_ARRAY=(york/policy_version=2 \ 
-        york/name="${{ inputs.tag-name }}" \ 
+        york/name=\"${{ inputs.tag-name }}\" \ 
         york/group=FACULTY-DEV \
         york/project=${{ github.repository }} \
         york/status=${{ inputs.aws-environment }} \ 
