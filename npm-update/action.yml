@@ -9,7 +9,7 @@ inputs:
   node-version:
     description: Version of node to use
     required: false
-    default: '14'
+    default: '18'
   working-directory:
     description: Working directory for npm update
     required: false
