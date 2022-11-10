@@ -29,13 +29,29 @@ runs:
     - run: npm ci
       shell: bash
       working-directory: ${{ inputs.working-directory }}
-    - run: npm update
+    - id: outdated
+      name: Get summary of outdated packages
+      run: |
+        SUMMARY=`npm outdated || true`
+        DELIMITER="$(openssl rand -hex 8)"
+        echo "summary<<${DELIMITER}" >> "${GITHUB_OUTPUT}"
+        echo "${SUMMARY}" >> "${GITHUB_OUTPUT}"
+        echo "${DELIMITER}" >> "${GITHUB_OUTPUT}"
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - run: npm update --save
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       with:
-        body: Changes after running `npm update`
+        body: |
+          Changes after running `npm update --save`
+          
+          ### npm outdated summary
+          ```
+          ${{ steps.outdated.outputs.summary }}
+          ```
         branch: npm-update
         commit-message: npm update
         delete-branch: true
