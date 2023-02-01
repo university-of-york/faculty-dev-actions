@@ -70,6 +70,7 @@ runs:
         delete-branch: true
         labels: dependencies, ruby
         title: Bundle Update [non-production gems]
+        author: UoY Faculty Dev NPA <csrv1059@york.ac.uk>
 
     - name: Enable auto-merge
       if: steps.cpr.outputs.pull-request-operation == 'created'

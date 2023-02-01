@@ -57,3 +57,4 @@ runs:
         delete-branch: true
         labels: dependencies, javascript
         title: npm update
+        author: UoY Faculty Dev NPA <csrv1059@york.ac.uk>

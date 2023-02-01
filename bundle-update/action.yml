@@ -35,3 +35,4 @@ runs:
         delete-branch: true
         labels: dependencies, ruby
         title: Bundle Update
+        author: UoY Faculty Dev NPA <csrv1059@york.ac.uk>
