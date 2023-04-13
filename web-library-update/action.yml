@@ -28,7 +28,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v5
       with:
         body: Update web library version
         branch: web-library-version
