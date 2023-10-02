@@ -7,13 +7,18 @@ inputs:
     description: Working directory for Gemfile
     required: false
     default: ./
+  ruby-version:
+    description: Sets the ruby version you want to build with.
+    required: false
+    default: 2.7
 
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1
       with:
+        ruby-version: ${{ inputs.ruby-version }}
         bundler-cache: true
         working-directory: ${{ inputs.working-directory }}
     # See https://jira.york.ac.uk/browse/FD-594 for CVE-2015-9284
