@@ -10,9 +10,19 @@ inputs:
     required: true
 
 runs:
-  using: docker
-  image: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-dev:${{ inputs.ruby-version }}
-  args:
-    - bash
-    - -c
-    - ${{ inputs.command }}
+  using: composite
+  steps:
+     # This step is here just because we can't use the
+     # inputs data in an "image:" setting.
+   - name: set ruby version
+     id: ruby-ver
+     runs-on: ubuntu-latest
+     outputs:
+       image: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-dev:${{ inputs.ruby-version }}
+
+   - name: Run command
+     image: ${{ steps.ruby-ver.outputs.image }}
+     args:
+      - bash
+      - -c
+      - ${{ inputs.command }}
