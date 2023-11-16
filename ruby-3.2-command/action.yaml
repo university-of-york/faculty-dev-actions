@@ -1,0 +1,15 @@
+
+name: Ruby container command 3.2
+description: Run a command within our ruby 3.2 container
+inputs:
+  command:
+    description: Command to run
+    required: true
+
+runs:
+  using: docker
+  image: docker://ghcr.io/university-of-york/faculty-dev-docker-images/ci/aws-lambda-ruby-dev:3.2
+  args:
+    - bash
+    - -c
+    - ${{ inputs.command }}
