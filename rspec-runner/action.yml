@@ -10,7 +10,7 @@ inputs:
   ruby-version:
     description: Sets the ruby version you want to build with.
     required: false
-    default: 2.7
+    default: 'default'
 
 runs:
   using: composite
