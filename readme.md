@@ -2,6 +2,10 @@
 
 Useful actions shared between our repositories.
 
+The content of this repository is made available to the public under
+the MIT license, as others may find our dev / CI setup useful - or at
+least educational.
+
 ## bundle-update
 
 Run `bundle update` against a repository and create a pull request with any changes.
