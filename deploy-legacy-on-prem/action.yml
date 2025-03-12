@@ -12,12 +12,11 @@ inputs:
 
 runs:
   steps:
-  - uses: actions/checkout@v4
-
-  - name: Deploy
-    uses: docker://ghcr.io/university-of-york/sys-docker-rsyncssh-image/ci/rsyncssh:1
-    env:
-  SERVER: ${{ inputs.deploy-server }}
-  RSYNC_USER: 'cdeploy-rsync'
-  SSH_USER: 'cdeploy-ssh'
-  SSH_KEY: ${{ inputs.ssh-key }}
+    - uses: actions/checkout@v4
+    - name: Deploy
+      uses: docker://ghcr.io/university-of-york/sys-docker-rsyncssh-image/ci/rsyncssh:1
+      env:
+        SERVER: ${{ inputs.deploy-server }}
+        RSYNC_USER: 'cdeploy-rsync'
+        SSH_USER: 'cdeploy-ssh'
+        SSH_KEY: ${{ inputs.ssh-key }}
