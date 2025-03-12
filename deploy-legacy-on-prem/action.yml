@@ -3,37 +3,21 @@ description: Deploy onto a on-premise server
 author: Faculty Development Team
 
 inputs:
-  deploy-environment:
-    description: Deployment environment name
+  deploy-server:
+    description: Server to deploy to
     required: true
-  deploy-branch:
-    description: Branch to deploy from
+  ssh-key:
+    description: SSH key for remote user
     required: true
-    default: main
 
 runs:
-  on:
-  push:
-    branches:
-      - ${{ inputs.deploy-branch }}
+  steps:
+  - uses: actions/checkout@v4
 
-  jobs:
-    deployment:
-      name: Deploy to servers
-      runs-on: [self-hosted, Linux, X64]
-      strategy:
-        fail-fast: false
-        matrix:
-          environment: [${{ inputs.deploy-environment }}]
-      environment: ${{ matrix.environment }}
-
-      steps:
-        - uses: actions/checkout@v4
-
-        - name: Deploy
-          uses: docker://ghcr.io/university-of-york/sys-docker-rsyncssh-image/ci/rsyncssh:1
-          env:
-            SERVER: ${{ vars.DEPLOY_SSH_HOST }}
-            RSYNC_USER: 'cdeploy-rsync'
-            SSH_USER: 'cdeploy-ssh'
-            SSH_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+  - name: Deploy
+    uses: docker://ghcr.io/university-of-york/sys-docker-rsyncssh-image/ci/rsyncssh:1
+    env:
+  SERVER: ${{ inputs.deploy-server }}
+  RSYNC_USER: 'cdeploy-rsync'
+  SSH_USER: 'cdeploy-ssh'
+  SSH_KEY: ${{ inputs.ssh-key }}
