@@ -97,6 +97,35 @@ jobs:
       - uses: university-of-york/faculty-dev-actions/bundler-audit@v1
 ```
 
+## deploy-legacy-on-prem
+
+Deploys the application onto an on-premise server, via the `sys-docker-rsyncssh-image` docker action.
+
+### Inputs
+
+* `deploy-server`: the name of the webserver to deploy to
+* `ssh-key`: the SSH key of the SSH user on the webserver
+
+### Example
+
+```yaml
+jobs:
+  deployment:
+    name: Deploy to servers
+    runs-on: [self-hosted, Linux, X64]
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [prod]
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - uses: university-of-york/faculty-dev-actions/deploy-legacy-on-prem@legacy-deploy-action
+        with:
+          deploy-server: ${{ vars.DEPLOY_SSH_HOST }}
+          ssh-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+```
+
 ## gemfury-deploy
 
 Deploys the named gem to gemfury
