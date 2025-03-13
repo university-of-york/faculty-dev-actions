@@ -1,0 +1,23 @@
+name: Deploy on Legacy On-Prem Server
+description: Deploy onto a on-premise server
+author: Faculty Development Team
+
+inputs:
+  deploy-server:
+    description: Server to deploy to
+    required: true
+  ssh-key:
+    description: SSH key for remote user
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: Deploy
+      uses: docker://ghcr.io/university-of-york/sys-docker-rsyncssh-image/ci/rsyncssh:1
+      env:
+        SERVER: ${{ inputs.deploy-server }}
+        RSYNC_USER: 'cdeploy-rsync'
+        SSH_USER: 'cdeploy-ssh'
+        SSH_KEY: ${{ inputs.ssh-key }}
