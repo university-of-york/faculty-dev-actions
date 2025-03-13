@@ -120,7 +120,7 @@ jobs:
     environment: ${{ matrix.environment }}
 
     steps:
-      - uses: university-of-york/faculty-dev-actions/deploy-legacy-on-prem@legacy-deploy-action
+      - uses: university-of-york/faculty-dev-actions/deploy-legacy-on-prem@v1
         with:
           deploy-server: ${{ vars.DEPLOY_SSH_HOST }}
           ssh-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
