@@ -1,6 +1,11 @@
 name: Check if CHANGELOG needs updating
 description: Checks if files in lib/ have changed; if so, check if CHANGELOG.md has been updated
 author: Workflow Improvement Team
+inputs:
+  changelog-file-path:
+    description: Relative path to the CHANGELOG file
+    required: false
+    default: CHANGELOG.md
 
 runs:
   using: composite
@@ -9,9 +14,9 @@ runs:
     - name: Check if CHANGELOG needs updating
       run: |
         changes=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
-        if [ -f "CHANGELOG.md" ]; then
+        if [ -f "${{ inputs.changelog-file-path }}" ]; then
         	echo $changes | grep -q -E 'lib/.+' && \
-        	echo $changes | grep -q 'CHANGELOG.md'
+        	echo $changes | grep -q '${{ inputs.changelog-file-path }}'
         else
         	echo "No CHANGELOG.md to update"
         fi
