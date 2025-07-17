@@ -1,0 +1,18 @@
+name: Check if CHANGELOG needs updating
+description: Checks if files in lib/ have changed; if so, check if CHANGELOG.md has been updated
+author: Workflow Improvement Team
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: Check if CHANGELOG needs updating
+      run: |
+        changes=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+        if [ -f "CHANGELOG.md" ]; then
+        	echo $changes | grep -q -E 'lib/.+' && \
+        	echo $changes | grep -q 'CHANGELOG.md'
+        else
+        	echo "No CHANGELOG.md to update"
+        fi
+      shell: bash
