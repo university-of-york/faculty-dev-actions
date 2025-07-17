@@ -126,6 +126,28 @@ jobs:
           ssh-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
 ```
 
+## gem-changelog-update-check
+
+Used for pull requests to check if the CHANGELOG.md (or specified file) has been updated if files in the `lib/`
+directory have been updated. The test will return a fail if changes are required but haven't been made.
+
+### Inputs
+
+* `changelog-file-path` _(optional)_: relative path to the changelog file. Defaults to `CHANGELOG.md`.
+
+### Example
+
+```yaml
+jobs:
+  gem-changelog-update-check:
+    name: Gemfury Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: university-of-york/faculty-dev-actions/gem-changelog-update-check@v1
+        with:
+          changelog-file-path: docs/CHANGELOG.md
+```
+
 ## gemfury-deploy
 
 Deploys the named gem to gemfury
