@@ -18,6 +18,6 @@ runs:
         	echo "$changes" | grep -q -E 'lib/.+' && \
         	echo "$changes" | grep -q '${{ inputs.changelog-file-path }}'
         else
-        	echo "No CHANGELOG.md to update"
+        	echo "No ${{ inputs.changelog-file-path }} to update"
         fi
       shell: bash
