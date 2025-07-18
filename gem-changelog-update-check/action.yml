@@ -14,10 +14,11 @@ runs:
     - name: Check if CHANGELOG needs updating
       run: |
         changes="$(git diff --name-only --diff-filter=ACMRT )"
-        if [ -f "${{ inputs.changelog-file-path }}" ]; then
+        changelog_file="${{ inputs.changelog-file-path }}"
+        if [ -f "$changelog_file" ]; then
         	echo "$changes" | grep -q -E 'lib/.+' && \
-        	echo "$changes" | grep -q '${{ inputs.changelog-file-path }}'
+        	echo "$changes" | grep -q "$changelog_file"
         else
-        	echo "No ${{ inputs.changelog-file-path }} to update"
+        	echo "No $changelog_file to update"
         fi
       shell: bash
