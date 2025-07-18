@@ -13,15 +13,10 @@ runs:
     - uses: actions/checkout@v4
     - name: Check if CHANGELOG needs updating
       run: |
-        changes=$(git diff --name-only --diff-filter=ACMRT main)
-        git status;
-        echo "Test message; before branch";
-        echo $changes;
+        changes="$(git diff --name-only --diff-filter=ACMRT )"
         if [ -f "${{ inputs.changelog-file-path }}" ]; then
-            echo 'in branch' &&
-            echo $changes &&
-        	echo $changes | grep -q -E 'lib/.+' && \
-        	echo $changes | grep -q '${{ inputs.changelog-file-path }}'
+        	echo "$changes" | grep -q -E 'lib/.+' && \
+        	echo "$changes" | grep -q '${{ inputs.changelog-file-path }}'
         else
         	echo "No CHANGELOG.md to update"
         fi
