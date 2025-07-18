@@ -20,7 +20,7 @@ runs:
         echo "Changes relative to main branch:"
         echo "$changes"
         if [ -f "$changelog_file" ]; then
-        	echo "$changes" | grep -q -E 'lib/.+' && \
+        	echo "$changes" | grep -q -E '^lib/.+$' && \
         	echo "$changes" | grep -q "$changelog_file"
         else
         	echo "No $changelog_file to update"
