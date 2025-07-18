@@ -14,6 +14,7 @@ runs:
     - name: Check if CHANGELOG needs updating
       run: |
         changes=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+        git status;
         echo "Test message; before branch";
         echo $changes;
         if [ -f "${{ inputs.changelog-file-path }}" ]; then
