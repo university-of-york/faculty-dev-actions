@@ -17,6 +17,8 @@ runs:
       run: |
         changes="$(git diff --name-only --diff-filter=ACMRT main)"
         changelog_file="${{ inputs.changelog-file-path }}"
+        echo "Changes relative to main branch:"
+        echo "$changes"
         if [ -f "$changelog_file" ]; then
         	echo "$changes" | grep -q -E 'lib/.+' && \
         	echo "$changes" | grep -q "$changelog_file"
