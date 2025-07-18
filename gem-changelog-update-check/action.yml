@@ -16,7 +16,7 @@ runs:
         changes=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
         echo $changes
         if [ -f "${{ inputs.changelog-file-path }}" ]; then
-            echo $changes
+            echo $changes &&
         	echo $changes | grep -q -E 'lib/.+' && \
         	echo $changes | grep -q '${{ inputs.changelog-file-path }}'
         else
