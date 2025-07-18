@@ -13,7 +13,7 @@ runs:
     - uses: actions/checkout@v4
     - name: Check if CHANGELOG needs updating
       run: |
-        changes=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+        changes=$(git diff --name-only --diff-filter=ACMRT main)
         git status;
         echo "Test message; before branch";
         echo $changes;
