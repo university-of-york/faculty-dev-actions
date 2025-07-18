@@ -11,9 +11,11 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Check if CHANGELOG needs updating
       run: |
-        changes="$(git diff --name-only --diff-filter=ACMRT )"
+        changes="$(git diff --name-only --diff-filter=ACMRT main)"
         changelog_file="${{ inputs.changelog-file-path }}"
         if [ -f "$changelog_file" ]; then
         	echo "$changes" | grep -q -E 'lib/.+' && \
