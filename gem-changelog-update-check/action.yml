@@ -15,12 +15,13 @@ runs:
         fetch-depth: 0
     - name: Check if CHANGELOG needs updating
       run: |
+        file_regex='^lib/|^bin/|^spec/|\.gemspec$'
         changes="$(git diff --name-only --diff-filter=ACMRT origin/main HEAD)"
         changelog_file="${{ inputs.changelog-file-path }}"
         echo "Changes relative to main branch:"
         echo "$changes"
         if [ -f "$changelog_file" ]; then
-        	echo "$changes" | grep -q -E '^lib/.+$' && \
+        	echo "$changes" | grep -q -E "$file_regex" && \
         	echo "$changes" | grep -q "$changelog_file"
         else
         	echo "No $changelog_file to update"
