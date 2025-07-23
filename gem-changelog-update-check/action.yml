@@ -20,10 +20,10 @@ runs:
         changelog_file="${{ inputs.changelog-file-path }}"
         echo "Changes relative to main branch:"
         echo "$changes"
-        if [ -f "$changelog_file" ]; then
-        	echo "$changes" | grep -q -E "$file_regex" && \
-        	echo "$changes" | grep -q "$changelog_file"
+        if [ -f "$changelog_file" ]
+          echo "$changes" | grep -q -E "$file_regex" && \
+          echo "$changes" | grep -Fqx "$changelog_file"
         else
-        	echo "No $changelog_file to update"
+          echo "No $changelog_file to update"
         fi
       shell: bash
