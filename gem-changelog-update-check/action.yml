@@ -21,6 +21,7 @@ runs:
         echo "Changes relative to main branch:"
         echo "$changes"
         if [ -f "$changelog_file" ]
+        then
           echo "$changes" | grep -q -E "$file_regex" && \
           echo "$changes" | grep -Fqx "$changelog_file"
         else
