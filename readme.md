@@ -140,7 +140,7 @@ directory have been updated. The test will return a fail if changes are required
 ```yaml
 jobs:
   gem-changelog-update-check:
-    name: Gemfury Deployment
+    name: Check for CHANGELOG change
     runs-on: ubuntu-latest
     steps:
       - uses: university-of-york/faculty-dev-actions/gem-changelog-update-check@v1
