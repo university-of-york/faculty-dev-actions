@@ -128,8 +128,8 @@ jobs:
 
 ## gem-changelog-update-check
 
-Used for pull requests to check if the CHANGELOG.md (or specified file) has been updated if files in the `lib/`
-directory have been updated. The test will return a fail if changes are required but haven't been made.
+Used for pull requests to check if the changelog has been updated if files in the `lib/`, `bin/`, or `spec/`
+directories have been updated. The test will return a fail if changes are required but haven't been made.
 
 ### Inputs
 
