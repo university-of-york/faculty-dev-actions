@@ -13,7 +13,7 @@ runs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: Check if CHANGELOG needs updating
+    - name: Check that changelog was updated if necessary
       run: |
         file_regex='^(lib/|bin/|spec/)|\.gemspec$'
         changes="$(git diff --name-only origin/main HEAD)"
