@@ -15,7 +15,7 @@ runs:
         fetch-depth: 0
     - name: Check if CHANGELOG needs updating
       run: |
-        file_regex='^lib/|^bin/|^spec/|\.gemspec$'
+        file_regex='^(lib/|bin/|spec/)|\.gemspec$'
         changes="$(git diff --name-only origin/main HEAD)"
         changelog_file="${{ inputs.changelog-file-path }}"
         echo "Changes relative to main branch:"
