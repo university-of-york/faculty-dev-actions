@@ -27,6 +27,7 @@ runs:
           exit 0
         elif echo "$changes" | grep -Fqx "$changelog_file"
         then
+          echo "$changelog_file is up to date"
           exit 0
         elif echo "$changes" | grep -Eq "$file_regex"
         then
