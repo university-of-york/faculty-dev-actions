@@ -1,0 +1,37 @@
+name: Check if CHANGELOG needs updating
+description: Checks if files in lib/ have changed; if so, check if CHANGELOG.md has been updated
+author: Workflow Improvement Team
+inputs:
+  changelog-file-path:
+    description: Relative path to the CHANGELOG file
+    required: false
+    default: CHANGELOG.md
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Check that changelog was updated if necessary
+      run: |
+        file_regex='^(lib/|bin/|spec/)|\.gemspec$'
+        changes="$(git diff --name-only origin/main HEAD)"
+        changelog_file="${{ inputs.changelog-file-path }}"
+        echo "Changes relative to main branch:"
+        echo "$changes"
+
+        if [ ! -f "$changelog_file" ]
+        then
+          echo "No $changelog_file to update"
+          exit 0
+        elif echo "$changes" | grep -Fqx "$changelog_file"
+        then
+          echo "$changelog_file is up to date"
+          exit 0
+        elif echo "$changes" | grep -Eq "$file_regex"
+        then
+          echo "changes to $changelog_file required" >&2
+          exit 1
+        fi
+      shell: bash
