@@ -182,7 +182,7 @@ Runs `npm update` on a runner against a repository and create a pull request wit
 
 * `checkout-key`: the SSH key to use to check out the repository.
   Details of setting up this key can be found in [the wiki](https://wiki.york.ac.uk/display/ittechdocs/Faculty+Dev%3A+New+Github+Repository).
-* `node-version` _(optional)_: the version of node to use. Defaults to 14.
+* `node-version` _(optional)_: the version of node to use. Defaults to 18.
 * `working-directory` _(optional)_: the working directory where Gemfile can be found. Defaults to the repository root.
 
 ## rspec-lambda
