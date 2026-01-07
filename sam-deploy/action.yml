@@ -10,6 +10,5 @@ inputs:
 runs:
   using: composite
   steps:
-    - name:
     - run: bundle exec rake deploy:to["${{ inputs.aws-environment }}", 'github']
       shell: bash
