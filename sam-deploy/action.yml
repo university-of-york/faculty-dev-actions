@@ -11,13 +11,14 @@ inputs:
     required: false
     default: ./
 
+permissions:
+  contents: write
+
 runs:
   using: composite
   steps:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
-      permissions:
-        contents: write
       with:
         ruby-version: 'default'
         bundler-cache: true
