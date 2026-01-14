@@ -24,6 +24,6 @@ runs:
         bundler-cache: false
         working-directory: ${{ inputs.working-directory }}
     - name: Deploy via rake deploy task
-      run: gem install rake && rake deploy:to['${{ inputs.aws-environment }}','github']
+      run: gem install rake && rake deploy:to['${{ inputs.aws-environment }}','github','GithubActionsDeploymentRole']
       shell: bash
       working-directory: ${{ inputs.working-directory }}
