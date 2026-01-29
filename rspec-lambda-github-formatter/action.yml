@@ -18,7 +18,7 @@ runs:
     - uses: actions/checkout@v4
     - run: |
         export BUNDLE_DEPLOYMENT=true
-        export BUNDLE_WITHOUT=deployment
+        export BUNDLE_WITHOUT=development
         bundle install
       shell: bash
     - uses: actions/download-artifact@v4
