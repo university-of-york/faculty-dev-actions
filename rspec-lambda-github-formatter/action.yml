@@ -16,7 +16,10 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
-    - run: bundle install --deployment --without development
+    - run: |
+        export BUNDLE_DEPLOYMENT=true
+        export BUNDLE_WITHOUT=deployment
+        bundle install
       shell: bash
     - uses: actions/download-artifact@v4
       if: ${{ inputs.artifact-name != 'false' }}
