@@ -3,65 +3,24 @@ description: Deploy to cloudformation
 author: Faculty Development Team
 
 inputs:
-  aws-account-id:
-    description: AWS Account ID
-    required: true
   aws-environment:
     description: AWS Environment (dev, staging, prod)
     required: true
-  parameter-overrides:
-    description: Parameter overrides for cloudformation
+  working-directory:
+    description: Working directory for Gemfile
     required: false
-  s3bucket:
-    description: S3 bucket for uploading code
-    required: true
-  stack-name:
-    description: Stack name for cloudformation
-    required: true
-    default: ${{ github.event.repository.name }}
-  tag-name:
-    description: Name of the app
-    required: true
-  template:
-    description: Template file name
-    required: true
-    default: cloudformation.yaml
+    default: ./
 
 runs:
   using: composite
   steps:
-    - run: >
-        aws cloudformation package
-        --template-file ${{ inputs.template }}
-        --output-template-file serverless-output.yaml 
-        --s3-bucket ${{ inputs.s3bucket }}
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 'default'
+        bundler-cache: false
+        working-directory: ${{ inputs.working-directory }}
+    - name: Deploy via rake deploy task
+      run: gem install rake && rake deploy:to['${{ inputs.aws-environment }}','github','GithubActionsDeploymentRole']
       shell: bash
-
-    - run: |
-        ARGS=""
-        if [ -n "${{ inputs.parameter-overrides }}" ] 
-        then
-          ARGS="$ARGS --parameter-overrides ${{ inputs.parameter-overrides }} "
-        fi
-        
-        TAGS_ARRAY=(york/policy_version=2 \ 
-        york/name=\"${{ inputs.tag-name }}\" \ 
-        york/group=FACULTY-DEV \
-        york/project=${{ github.repository }} \
-        york/status=${{ inputs.aws-environment }} \ 
-        york/pushed_by=github \
-        york/defined_in=cloudformation \ 
-        york/repo_name=${{ github.repository }} \
-        )
-        TAGS="--tags ${TAGS_ARRAY[@]}"
-        
-        array=(aws cloudformation deploy \
-        --template-file serverless-output.yaml \
-        --stack-name ${{ inputs.stack-name }} \
-        --capabilities CAPABILITY_IAM \
-        --role-arn ${{ format('arn:aws:iam::{0}:role/GithubActionsDeploymentRole', inputs.aws-account-id) }} \
-        --no-fail-on-empty-changeset \
-        $ARGS $TAGS)
-        
-        eval $(echo ${array[@]})
-      shell: bash
+      working-directory: ${{ inputs.working-directory }}
