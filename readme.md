@@ -18,10 +18,11 @@ bundle config set deployment true without test:development clean true && bundle 
 ### Inputs
 
 * `bundle-clean`: (optional) boolean `true` or `false`. Whether to have `bundle clean` run after `bundle install`. Defaults to `true`.
+* `bundle-deploy`: (optional) boolean `true` or `false`. Whether to set `deployment` flag. Defaults to `true`.
 * `bundle-without`: (optional) **colon-separated** list of gem groups to ignore during `bundle install`. Defaults to `test:development`.
 
 ### Example
-With common defaults (so ignoring `development` and `test` gem groups and have `bundle clean` run after install):
+With common defaults, so ignoring `development` and `test` gem groups, enabling `deployment` mode and have `bundle clean` run after install:
 
 ```yaml
 name: Deploy
