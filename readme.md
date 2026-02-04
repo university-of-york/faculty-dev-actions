@@ -6,7 +6,7 @@ The content of this repository is made available to the public under
 the MIT license, as others may find our dev / CI setup useful - or at
 least educational.
 
-## bundle-install-deploy
+## bundle-install
 
 Run `bundle install` with standard config settings for deployments beforehand (via `bundle config`). With default
 parameters this will end up being:
@@ -14,6 +14,8 @@ parameters this will end up being:
 ```sh
 bundle config set deployment true without test:development clean true && bundle install
 ```
+
+I.e. suitable for AWS deployments.
 
 ### Inputs
 
@@ -42,7 +44,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Bundle install
-        uses: university-of-york/faculty-dev-actions/bundle-install-deploy
+        uses: university-of-york/faculty-dev-actions/bundle-install
 
 # ...
 ```
@@ -51,7 +53,7 @@ If `bundle clean` wasn't required and only the `test` gem group needs to be igno
 ```yaml
 # ...
 - name: Bundle install
-    uses: university-of-york/faculty-dev-actions/bundle-install-deploy
+    uses: university-of-york/faculty-dev-actions/bundle-install
     with:
       bundle-without: test
       bundle-clean: false

@@ -1,5 +1,5 @@
-name: Bundle Install Deploy
-description: Run bundle install command for deployment to AWS
+name: Bundle Install
+description: Run bundle install command
 author: Workflow Improvement Team
 
 inputs:
