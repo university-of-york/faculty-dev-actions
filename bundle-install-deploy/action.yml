@@ -3,7 +3,7 @@ description: Run bundle install command for deployment to AWS
 author: Workflow Improvement Team
 
 inputs:
-  without-gem-groups:
+  bundle-without:
     description: Colon-separated list of Gem groups not to install
     required: false
     default: test:development

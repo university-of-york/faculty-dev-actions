@@ -17,7 +17,7 @@ bundle config set deployment true without test:development clean true && bundle 
 
 ### Inputs
 
-* `without-gem-groups`: (optional) **colon-separated** list of gem groups to ignore during `bundle install`. Defaults to `test:development`.
+* `bundle-without`: (optional) **colon-separated** list of gem groups to ignore during `bundle install`. Defaults to `test:development`.
 * `bundle-clean`: (optional) boolean `true` or `false`. Wherever or not to have `bundle clean` run after `bundle install`. Defaults to `true`.
 
 ### Example
@@ -52,7 +52,7 @@ If `bundle clean` wasn't required and only the `test` gem group needs to be igno
 - name: Bundle install
     uses: university-of-york/faculty-dev-actions/bundle-install-deploy
     with:
-      without-gem-groups: test
+      bundle-without: test
       bundle-clean: false
 # ...
 ```
