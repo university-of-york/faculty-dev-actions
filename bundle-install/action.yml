@@ -1,0 +1,24 @@
+name: Bundle Install
+description: Run bundle install command
+author: Workflow Improvement Team
+
+inputs:
+  bundle-clean:
+    description: Whether or not to run "bundle clean" after "bundle install"
+    required: false
+    default: true
+  bundle-deploy:
+    description: Whether or not to run bundle install in "deployment" mode
+    required: false
+    default: true
+  bundle-without:
+    description: Colon-separated list of Gem groups not to install
+    required: false
+    default: test:development
+
+runs:
+  using: composite
+  steps:
+    - uses: university-of-york/faculty-dev-actions/ruby-3.2-command@v1
+      with:
+        command: bundle config set deployment ${{ inputs.bundle-deploy }} without ${{ inputs.without-gem-groups }} clean ${{ inputs.bundle- }} && bundle install
