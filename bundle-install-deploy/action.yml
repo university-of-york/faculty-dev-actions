@@ -3,14 +3,14 @@ description: Run bundle install command for deployment to AWS
 author: Workflow Improvement Team
 
 inputs:
-  bundle-without:
-    description: Colon-separated list of Gem groups not to install
-    required: false
-    default: test:development
   bundle-clean:
     description: Wherever or not to run "bundle clean" after "bundle install"
     required: false
     default: true
+  bundle-without:
+    description: Colon-separated list of Gem groups not to install
+    required: false
+    default: test:development
 
 runs:
   using: composite
