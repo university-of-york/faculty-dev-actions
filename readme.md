@@ -6,6 +6,63 @@ The content of this repository is made available to the public under
 the MIT license, as others may find our dev / CI setup useful - or at
 least educational.
 
+## bundle-install-deploy
+
+Run `bundle install` with standard config settings for deployments beforehand (via `bundle config`). With default
+parameters this will end up being:
+
+```sh
+bundle config set deployment true without test:development clean true && bundle install
+```
+
+### Inputs
+
+* `without-gem-groups`: (optional) **colon-separated** list of gem groups to ignore during `bundle install`. Defaults to `test:development`.
+* `bundle-clean`: (optional) boolean `true` or `false`. Wherever or not to have `bundle clean` run after `bundle install`. Defaults to `true`.
+
+### Example
+With common defaults (so ignoring `development` and `test` gem groups and have `bundle clean` run after install):
+
+```yaml
+name: Deploy
+
+# ...
+
+jobs:
+  aws-deployment:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    strategy:
+      matrix:
+        environment: ['dev', 'staging', 'prod']
+    environment: ${{ matrix.environment }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bundle install
+        uses: university-of-york/faculty-dev-actions/bundle-install-deploy
+
+# ...
+```
+
+If `bundle clean` wasn't required and only the `test` gem group needs to be ignored:
+```yaml
+# ...
+- name: Bundle install
+    uses: university-of-york/faculty-dev-actions/bundle-install-deploy
+    with:
+      without-gem-groups: test
+      bundle-clean: false
+# ...
+```
+
+This will basically end up running:
+
+```sh
+bundle config set deployment true without test clean false && bundle install
+```
+
 ## bundle-update
 
 Run `bundle update` against a repository and create a pull request with any changes.
