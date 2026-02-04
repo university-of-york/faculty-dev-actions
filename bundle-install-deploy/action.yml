@@ -4,7 +4,7 @@ author: Workflow Improvement Team
 
 inputs:
   bundle-clean:
-    description: Wherever or not to run "bundle clean" after "bundle install"
+    description: Whether or not to run "bundle clean" after "bundle install"
     required: false
     default: true
   bundle-without:
