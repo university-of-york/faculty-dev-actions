@@ -21,4 +21,4 @@ runs:
   steps:
     - uses: university-of-york/faculty-dev-actions/ruby-3.2-command@v1
       with:
-        command: bundle config set deployment ${{ inputs.bundle-deploy }} without ${{ inputs.without-gem-groups }} clean ${{ inputs.bundle- }} && bundle install
+        command: bundle config set deployment ${{ inputs.bundle-deploy }} without ${{ inputs.without-gem-groups }} clean ${{ inputs.bundle-clean }} && bundle install
