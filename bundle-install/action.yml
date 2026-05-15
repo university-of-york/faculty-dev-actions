@@ -15,10 +15,14 @@ inputs:
     description: Colon-separated list of Gem groups not to install
     required: false
     default: test:development
+  ruby-version:
+    description: The major & minor-point Ruby version to use, e.g. '3.4' for Ruby 3.4
+    required: false
+    default: 3.2
 
 runs:
   using: composite
   steps:
-    - uses: university-of-york/faculty-dev-actions/ruby-3.4-command@v1
+    - uses: university-of-york/faculty-dev-actions/ruby-${{ inputs.ruby-version }}-command@v1
       with:
         command: bundle config set deployment ${{ inputs.bundle-deployment }} && bundle config set without ${{ inputs.bundle-without }} && bundle config set clean ${{ inputs.bundle-clean }} && bundle install

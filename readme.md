@@ -25,6 +25,7 @@ in `./vendor/bundle` in the project directory in the runner.
 * `bundle-clean`: (optional) boolean `true` or `false`. Whether to have `bundle clean` run after `bundle install`. Defaults to `true`.
 * `bundle-deploy`: (optional) boolean `true` or `false`. Whether to set `deployment` flag. Defaults to `true`.
 * `bundle-without`: (optional) **colon-separated** list of gem groups to ignore during `bundle install`. Defaults to `test:development`.
+* `ruby-version`: (optional) string, specifies the `ruby-X.X-command` action e.g. "3.2" will ensure `ruby-3.2-command` is used. Defaults to `3.2`.
 
 ### Example
 With common defaults, so ignoring `development` and `test` gem groups, enabling `deployment` mode and have `bundle clean` run after install:
@@ -67,6 +68,16 @@ This will basically end up running:
 
 ```sh
 bundle config set deployment true without test clean false && bundle install
+```
+
+Use Ruby 3.4 instead of 3.2 (the default):
+```yaml
+# ...
+- name: Bundle install
+    uses: university-of-york/faculty-dev-actions/bundle-install
+    with:
+      ruby-version: "3.2"
+# ...
 ```
 
 ## bundle-update
