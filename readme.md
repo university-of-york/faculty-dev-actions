@@ -17,6 +17,9 @@ bundle config set deployment true without test:development clean true && bundle 
 
 I.e. suitable for AWS deployments.
 
+**Note**: this will run the `bundle install` command in a Docker container, resulting in the gems being installed
+in `./vendor/bundle` in the project directory in the runner.
+
 ### Inputs
 
 * `bundle-clean`: (optional) boolean `true` or `false`. Whether to have `bundle clean` run after `bundle install`. Defaults to `true`.
