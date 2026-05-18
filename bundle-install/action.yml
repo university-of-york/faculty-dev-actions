@@ -23,7 +23,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Bundle update with Ruby 3.2
-      uses: university-of-york/faculty-dev-actions/ruby-${{ inputs.ruby-version }}-command@v1
+    - uses: university-of-york/faculty-dev-actions/ruby-${{ inputs.ruby-version }}-command@v1
       with:
         command: bundle config set deployment ${{ inputs.bundle-deployment }} && bundle config set without ${{ inputs.bundle-without }} && bundle config set clean ${{ inputs.bundle-clean }} && bundle install
