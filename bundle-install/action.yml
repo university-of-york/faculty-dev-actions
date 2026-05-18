@@ -23,6 +23,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: university-of-york/faculty-dev-actions/ruby-${{ inputs.ruby-version }}-command@v1
+    - name: Bundle update with Ruby 3.2
+      if: ${{ inputs.ruby-version == '3.2' }}
+      uses: university-of-york/faculty-dev-actions/ruby-3.2-command@v1
+      with:
+        command: bundle config set deployment ${{ inputs.bundle-deployment }} && bundle config set without ${{ inputs.bundle-without }} && bundle config set clean ${{ inputs.bundle-clean }} && bundle install
+
+    - name: Bundle update with Ruby 3.4
+      if: ${{ inputs.ruby-version == '3.4' }}
+      uses: university-of-york/faculty-dev-actions/ruby-3.4-command@v1
       with:
         command: bundle config set deployment ${{ inputs.bundle-deployment }} && bundle config set without ${{ inputs.bundle-without }} && bundle config set clean ${{ inputs.bundle-clean }} && bundle install
