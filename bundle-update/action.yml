@@ -27,7 +27,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v6
       with:
         body: Changes after running `bundle update`
         branch: bundle-update
